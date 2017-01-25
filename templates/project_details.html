@@ -8,5 +8,21 @@
 
 <p>Description: {{ description }}</p>
 <p>Max grade: {{ max_grade }}</p>
+
+
+
+    <h2> Students completed project:</h2>
+    <ul> 
+        {% for student in student_info%}
+            <li> {{ student[1] }} {{ student[2] }}: {{ student[3] }} 
+            <!-- github, first_name, last_name, grade = student -->
+            
+
+        {% endfor %}
+    </ul> 
+
+
+<!-- TODO: need to add links to individual student pages -->
+
 </body>
 </html>

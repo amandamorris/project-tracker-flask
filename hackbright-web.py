@@ -53,10 +53,13 @@ def student_add():
 def get_project_details(project_title):
     """Show title and maximum grade of a porject."""
     id_number, title, description, max_grade = hackbright.get_project_by_title(project_title)
+
+    student_info = hackbright.get_student_grades_by_project(project_title)
     return render_template("project_details.html",
                             title = title,
                             description = description,
-                            max_grade = max_grade)
+                            max_grade = max_grade,
+                            student_info = student_info)
 
 if __name__ == "__main__":
     hackbright.connect_to_db(app)

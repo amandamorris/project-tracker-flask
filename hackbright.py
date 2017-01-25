@@ -79,6 +79,19 @@ def get_projects_by_github(github):
     #print row
     return row
 
+def get_student_grades_by_project(title):
+    """Return a list students who have completed a project (and their grades)"""
+    QUERY = """
+        SELECT student_github, first_name, last_name, grade
+        FROM grades JOIN students ON student_github=github
+        WHERE project_title =:title
+    """
+
+    db_cursor = db.session.execute(QUERY, {'title': title})
+
+    row = db_cursor.fetchall()
+    return row
+
 def get_grade_by_github_title(github, title):
     """Print grade student received for a project."""
     QUERY = """
@@ -145,6 +158,10 @@ def handle_input():
         elif command == "projects_by_github":
             github = args[0]
             get_projects_by_github(github)
+
+        elif command == "student_grades_by_project":
+            title = args[0]
+            get_student_grades_by_project(title)
         else:
             if command != "quit":
                 print "Invalid Entry. Try again."
