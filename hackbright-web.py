@@ -15,10 +15,13 @@ def get_student():
 
     github = request.args.get('github', 'jhacks')
     first, last, github = hackbright.get_student_by_github(github)
+    project_and_grades = hackbright.get_projects_by_github(github)
+
     html = render_template("student_info.html",
                            first=first,
                            last=last,
-                           github=github)
+                           github=github,
+                           project_and_grades=project_and_grades)
     return html
     # return "%s is the GitHub account for %s %s" % (github, first, last)
 

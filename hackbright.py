@@ -67,7 +67,7 @@ def get_project_by_title(title):
 def get_projects_by_github(github):
     """Return a list of projects a student has completed"""
     QUERY = """
-        SELECT project_title
+        SELECT project_title, grade
         FROM grades
         WHERE student_github =:github
     """
@@ -75,7 +75,7 @@ def get_projects_by_github(github):
     db_cursor = db.session.execute(QUERY, {'github': github})
 
     row = db_cursor.fetchall()
-    print row
+    #print row
     return row
 
 def get_grade_by_github_title(github, title):
@@ -140,6 +140,10 @@ def handle_input():
         elif command == "assign_grade":
             github, title, grade = args
             assign_grade(github, title, grade)
+
+        elif command == "projects_by_github":
+            github = args[0]
+            get_projects_by_github(github)
         else:
             if command != "quit":
                 print "Invalid Entry. Try again."
@@ -148,6 +152,6 @@ if __name__ == "__main__":
     app = Flask(__name__)
     connect_to_db(app)
 
-   # handle_input()
+    handle_input()
 
     db.session.close()
