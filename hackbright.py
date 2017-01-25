@@ -64,7 +64,19 @@ def get_project_by_title(title):
     row = db_cursor.fetchone()
     print "Project: %s \nDescription: %s \nMaximum grade: %s" % (row[1], row[2], row[3])
 
+def get_projects_by_github(github):
+    """Return a list of projects a student has completed"""
+    QUERY = """
+        SELECT project_title
+        FROM grades
+        WHERE student_github =:github
+    """
 
+    db_cursor = db.session.execute(QUERY, {'github': github})
+
+    row = db_cursor.fetchall()
+    print row
+    return row
 
 def get_grade_by_github_title(github, title):
     """Print grade student received for a project."""
@@ -136,6 +148,6 @@ if __name__ == "__main__":
     app = Flask(__name__)
     connect_to_db(app)
 
-    handle_input()
+   # handle_input()
 
     db.session.close()
